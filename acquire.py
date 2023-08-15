@@ -26,7 +26,7 @@ def get_db_connection(database):
     return get_connection(database)
 
 ##############################################################################
-'''
+
 #Functions for the first part of Data Acquisition exercises 
 
 # Get titanic data 
@@ -54,7 +54,7 @@ def get_telco_data():
 
 
 
-'''
+
 ###############################################################################
 # Updated the get function for the second part of the Data Acquisition exercise
 # Get titanic data 
@@ -110,7 +110,7 @@ def new_telco_data():
     df = pd.read_sql(sql_query,env.get_db_url(env.user,env.host,env.password,'telco_churn'))
     return df
     
-
+    
 ###############################################################################
 # Updated the get function for the second part of the Data Acquisition exercise
 # Get iris data 
