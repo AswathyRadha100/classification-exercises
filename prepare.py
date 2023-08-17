@@ -68,48 +68,6 @@ def prep_titanic(titanic):
 
 
 # +
-# ------------------- Titanic dataset prepping for decision tree -------------------
-
-def prep_telco_for_dt(df_telco):
-    """
-    The function prep_telco function performs various data preprocessing steps on the Telco dataset, 
-    including dropping columns, converting churn column to a numerical format, converting
-    total_charges column to a float and cleaning total_charges .
-    
-    """
-
-
-    # drop any duplicates
-    df_telco = df_telco.drop_duplicates()
-
-    # Drop specified columns
-    df_telco = df_telco.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 
-                                          'phone_service', 'multiple_lines','online_security', 'online_backup', 
-                                          'device_protection','tech_support','streaming_tv','streaming_movies',
-                                          'paperless_billing', 'contract_type', 'internet_service_type', 
-                                          'payment_type','internet_service_type_id', 'contract_type_id', 
-                                          'payment_type_id'])
-                                   
-                                  
-    # Remove leading and trailing spaces from 'total_charges' column
-    df_telco['total_charges'] = df_telco['total_charges'].str.strip()
-
-    # Remove rows where 'total_charges' is empty
-    df_telco = df_telco[df_telco.total_charges != '']
-
-    # Convert 'total_charges' column to float
-    df_telco['total_charges'] = df_telco['total_charges'].astype(float)
-
-    # Encoding the target variable 'churn' as 1 for 'Yes' and 0 for 'No' 
-    df_telco['churn'] = df_telco['churn'].map({'Yes': 1, 'No': 0})
-
-    # Convert 'churn' column to integer
-    df_telco['churn'] = df_telco['churn'].astype(int)
-    
-    return df_telco
-
-
-# +
 # ------------------- Telco dataset -------------------
 
 def prep_telco(telco):
@@ -149,37 +107,47 @@ def prep_telco(telco):
     
     return telco
 
+
 # +
-# ------------------- Telco dataset prepping for decision tree-------------------
+# ------------------- Telco dataset prepping for decision tree -------------------
 
-
-def prep_telco_for_dt(telco):
+def prep_telco_for_dt(df_telco):
     """
     The function prep_telco function performs various data preprocessing steps on the Telco dataset, 
-    including dropping duplicates,dropping columns customer id, gender, senior citizen, partner, dependents, 
-                                  phone_service, 
-                                  multiple_lines,
-                                  online_security,online_backup, device_protection, tech_support,
-                                  streaming_tv,
-                                  streaming_movies, paperless_billing, contract_type, internet_service_type, 
-                                  payment_type,internet_service_type_id, contract_type_id, payment_type_id 
-                                  ,and converting a column to a numerical format.
+    including dropping columns, converting churn column to a numerical format, converting
+    total_charges column to a float and cleaning total_charges .
+    
     """
 
 
     # drop any duplicates
     df_telco = df_telco.drop_duplicates()
 
-    # telco = telco.drop(columns=['internet_service_type_id', 'contract_type_id', 'payment_type_id'])
+    # Drop specified columns
     df_telco = df_telco.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 
-                                  'phone_service', 
-                                  'multiple_lines',
-                                  'online_security', 'online_backup', 'device_protection', 'tech_support',
-                                  'streaming_tv',
-                                  'streaming_movies', 'paperless_billing', 'contract_type', 'internet_service_type', 
-                                  'payment_type','internet_service_type_id', 'contract_type_id', 'payment_type_id'])
+                                          'phone_service', 'multiple_lines','online_security', 'online_backup', 
+                                          'device_protection','tech_support','streaming_tv','streaming_movies',
+                                          'paperless_billing', 'contract_type', 'internet_service_type', 
+                                          'payment_type','internet_service_type_id', 'contract_type_id', 
+                                          'payment_type_id'])
+                                   
+                                  
+    # Remove leading and trailing spaces from 'total_charges' column
+    df_telco['total_charges'] = df_telco['total_charges'].str.strip()
 
-    
-    #telco.total_charges = telco.total_charges.str.replace(' ', '0').astype(float)
+    # Remove rows where 'total_charges' is empty
+    df_telco = df_telco[df_telco.total_charges != '']
+
+    # Convert 'total_charges' column to float
+    df_telco['total_charges'] = df_telco['total_charges'].astype(float)
+
+    # Encoding the target variable 'churn' as 1 for 'Yes' and 0 for 'No' 
+    df_telco['churn'] = df_telco['churn'].map({'Yes': 1, 'No': 0})
+
+    # Convert 'churn' column to integer
+    df_telco['churn'] = df_telco['churn'].astype(int)
     
     return df_telco
+# -
+
+
