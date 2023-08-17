@@ -68,6 +68,45 @@ def prep_titanic(titanic):
 
 
 # +
+# ------------------- Titanic dataset prepping for decision tree -------------------
+
+def prep_titanic_for_dt(df):
+    '''
+    The function prep_titanic_for_dt removes specific columns ('class', 'embarked', 'deck', 'age','passenger_id',
+    'embark_town','sex''pclass') and drops any duplicates to preprocess the Titanic dataset,
+    likely for analysis or modeling purposes.
+    '''
+    
+    #drop any duplicates
+    df = df.drop_duplicates()
+    
+    
+    #encoding categorical variables in a format suitable for machine learning algorithms
+    # Perform one-hot encoding(creating multiple binary columns) for 'embark_town' column
+    #creates three new binary columns,1 and 0 values in these new columns indicate 
+    #whether a passenger embarked at that specific town or not.
+    embark_dummies = pd.get_dummies(df['embark_town'], drop_first=False, dtype='int')
+    df = pd.concat([df, embark_dummies], axis=1)
+    
+
+    
+    #encoding categorical variables in a format suitable for machine learning algorithms
+    # Create dummy variables for 'sex' column and drop one of the dummies (keeping only 'sex' column)
+    # Changes the 'sex' column to have 1 for 'female' and 0 for 'male'
+    #  dummy_df = pd.get_dummies(df['sex'], drop_first=True, dtype='int')
+    #  df['sex'] = dummy_df
+    
+    
+    
+    # Drop specified columns
+    df = df.drop(columns=['pclass', 'deck', 'embarked', 'class', 'age', 'passenger_id', 'embark_town','sex'])
+    
+    
+    # Return the modified DataFrame
+    return df
+
+
+# +
 # ------------------- Telco dataset -------------------
 
 def prep_telco(telco):
