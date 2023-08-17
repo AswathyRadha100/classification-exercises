@@ -70,40 +70,43 @@ def prep_titanic(titanic):
 # +
 # ------------------- Titanic dataset prepping for decision tree -------------------
 
-def prep_titanic_for_dt(df):
-    '''
-    The function prep_titanic_for_dt removes specific columns ('class', 'embarked', 'deck', 'age','passenger_id',
-    'embark_town','sex''pclass') and drops any duplicates to preprocess the Titanic dataset,
-    likely for analysis or modeling purposes.
-    '''
+def prep_telco_for_dt(df_telco):
+    """
+    The function prep_telco function performs various data preprocessing steps on the Telco dataset, 
+    including dropping columns, converting churn column to a numerical format, converting
+    total_charges column to a float and cleaning total_charges .
     
-    #drop any duplicates
-    df = df.drop_duplicates()
-    
-    
-    #encoding categorical variables in a format suitable for machine learning algorithms
-    # Perform one-hot encoding(creating multiple binary columns) for 'embark_town' column
-    #creates three new binary columns,1 and 0 values in these new columns indicate 
-    #whether a passenger embarked at that specific town or not.
-    embark_dummies = pd.get_dummies(df['embark_town'], drop_first=False, dtype='int')
-    df = pd.concat([df, embark_dummies], axis=1)
-    
+    """
 
-    
-    #encoding categorical variables in a format suitable for machine learning algorithms
-    # Create dummy variables for 'sex' column and drop one of the dummies (keeping only 'sex' column)
-    # Changes the 'sex' column to have 1 for 'female' and 0 for 'male'
-    #  dummy_df = pd.get_dummies(df['sex'], drop_first=True, dtype='int')
-    #  df['sex'] = dummy_df
-    
-    
-    
+
+    # drop any duplicates
+    df_telco = df_telco.drop_duplicates()
+
     # Drop specified columns
-    df = df.drop(columns=['pclass', 'deck', 'embarked', 'class', 'age', 'passenger_id', 'embark_town','sex'])
+    df_telco = df_telco.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 
+                                          'phone_service', 'multiple_lines','online_security', 'online_backup', 
+                                          'device_protection','tech_support','streaming_tv','streaming_movies',
+                                          'paperless_billing', 'contract_type', 'internet_service_type', 
+                                          'payment_type','internet_service_type_id', 'contract_type_id', 
+                                          'payment_type_id'])
+                                   
+                                  
+    # Remove leading and trailing spaces from 'total_charges' column
+    df_telco['total_charges'] = df_telco['total_charges'].str.strip()
+
+    # Remove rows where 'total_charges' is empty
+    df_telco = df_telco[df_telco.total_charges != '']
+
+    # Convert 'total_charges' column to float
+    df_telco['total_charges'] = df_telco['total_charges'].astype(float)
+
+    # Encoding the target variable 'churn' as 1 for 'Yes' and 0 for 'No' 
+    df_telco['churn'] = df_telco['churn'].map({'Yes': 1, 'No': 0})
+
+    # Convert 'churn' column to integer
+    df_telco['churn'] = df_telco['churn'].astype(int)
     
-    
-    # Return the modified DataFrame
-    return df
+    return df_telco
 
 
 # +
@@ -145,3 +148,38 @@ def prep_telco(telco):
     telco.total_charges = telco.total_charges.str.replace(' ', '0').astype(float)
     
     return telco
+
+# +
+# ------------------- Telco dataset prepping for decision tree-------------------
+
+
+def prep_telco_for_dt(telco):
+    """
+    The function prep_telco function performs various data preprocessing steps on the Telco dataset, 
+    including dropping duplicates,dropping columns customer id, gender, senior citizen, partner, dependents, 
+                                  phone_service, 
+                                  multiple_lines,
+                                  online_security,online_backup, device_protection, tech_support,
+                                  streaming_tv,
+                                  streaming_movies, paperless_billing, contract_type, internet_service_type, 
+                                  payment_type,internet_service_type_id, contract_type_id, payment_type_id 
+                                  ,and converting a column to a numerical format.
+    """
+
+
+    # drop any duplicates
+    df_telco = df_telco.drop_duplicates()
+
+    # telco = telco.drop(columns=['internet_service_type_id', 'contract_type_id', 'payment_type_id'])
+    df_telco = df_telco.drop(columns = ['customer_id', 'gender', 'senior_citizen', 'partner', 'dependents', 
+                                  'phone_service', 
+                                  'multiple_lines',
+                                  'online_security', 'online_backup', 'device_protection', 'tech_support',
+                                  'streaming_tv',
+                                  'streaming_movies', 'paperless_billing', 'contract_type', 'internet_service_type', 
+                                  'payment_type','internet_service_type_id', 'contract_type_id', 'payment_type_id'])
+
+    
+    #telco.total_charges = telco.total_charges.str.replace(' ', '0').astype(float)
+    
+    return df_telco
