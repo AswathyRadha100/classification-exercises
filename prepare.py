@@ -68,7 +68,8 @@ def prep_titanic(titanic):
 
 
 # +
-# ------------------- Titanic dataset prepping for decision tree -------------------
+
+# ------------------- Titanic dataset prepping for decision tree and other algorithms -------------------
 
 def prep_titanic_for_dt(df):
     '''
@@ -96,10 +97,22 @@ def prep_titanic_for_dt(df):
     #  dummy_df = pd.get_dummies(df['sex'], drop_first=True, dtype='int')
     #  df['sex'] = dummy_df
     
+    # Create sex dummy variables
+    sex_dummies = pd.get_dummies(df['sex'], drop_first=False, dtype='int')
+    # Concatenate sex dummy variables to the DataFrame
+    df = pd.concat([df, sex_dummies], axis=1)
+    # Drop the 'sex' column
+    df.drop('sex', axis=1, inplace=True)
+
+    
+    
+    # Convert 'age' column to integers after handling NaN values
+    df['age'] = df['age'].fillna(0).astype(int)  # Replace NaN with 0 and convert to int
+
     
     
     # Drop specified columns
-    df = df.drop(columns=['pclass', 'deck', 'embarked', 'class', 'age', 'passenger_id', 'embark_town','sex'])
+    df = df.drop(columns=['pclass', 'deck', 'embarked', 'class', 'passenger_id', 'embark_town'])
     
     
     # Return the modified DataFrame
