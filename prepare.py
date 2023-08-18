@@ -73,8 +73,8 @@ def prep_titanic(titanic):
 
 def prep_titanic_for_dt(df):
     '''
-    The function prep_titanic_for_dt removes specific columns ('class', 'embarked', 'deck', 'age','passenger_id',
-    'embark_town','sex''pclass') and drops any duplicates to preprocess the Titanic dataset,
+    The function prep_titanic_for_dt removes specific columns ('class', 'embarked', 'deck','passenger_id',
+    'embark_town') and drops any duplicates to preprocess the Titanic dataset,
     likely for analysis or modeling purposes.
     '''
     
@@ -112,7 +112,7 @@ def prep_titanic_for_dt(df):
     
     
     # Drop specified columns
-    df = df.drop(columns=['pclass', 'deck', 'embarked', 'class', 'passenger_id', 'embark_town'])
+    df = df.drop(columns=[ 'deck', 'embarked', 'class', 'passenger_id', 'embark_town'])
     
     
     # Return the modified DataFrame
